@@ -11,6 +11,7 @@ import org.bson.types.ObjectId;
 
 import javax.ws.rs.NotFoundException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.logging.Level;
 
 @Log
@@ -45,6 +46,8 @@ public class GenericService<E, Repository extends GenericRepository> {
 
     public <E extends GenericEntity> E save(E object) {
         log.log(Level.INFO, "Salvando entidade");
+
+        object.setLastChange(new Date());
 
         repository.getMongoDatastore().save(object);
         return (E) get(object.getClass(), object.getId().toString());
