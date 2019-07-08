@@ -6,8 +6,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
 
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 
 @Data
@@ -18,9 +20,11 @@ import javax.validation.constraints.NotEmpty;
 public class User extends GenericEntity {
 
     @NotEmpty(message = "Campo username nao pode ser nulo")
+    @Email
     private String username;
 
     @NotEmpty(message = "Campo password nao pode ser nulo")
+    @Size(min = 2, max = 14)
     private String password;
 
 }

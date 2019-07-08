@@ -70,11 +70,16 @@ public class MongoDB {
             mongoClient = new MongoClient(new ServerAddress(DB_HOST, DB_PORT), mongoOptions);
             log.info("Connection to database '" + DB_HOST + ":" + DB_PORT + "/" + DB_NAME + "' initialized");
 
-            datastore = new Morphia().mapPackage(GenericEntity.class.getPackage().getName())
-                    .createDatastore(mongoClient, DB_NAME);
+            Morphia morphia = new Morphia();
+            new ValidationExtension(morphia);
+            morphia.mapPackage(GenericEntity.class.getPackage().getName());
+
+            datastore = morphia.createDatastore(mongoClient, DB_NAME);
             datastore.ensureIndexes();
             datastore.ensureCaps();
             log.info("Connection to database '" + DB_HOST + ":" + DB_PORT + "/" + DB_NAME + "' initialized");
+
+            new ValidationExtension(morphia);
 
         }
 
