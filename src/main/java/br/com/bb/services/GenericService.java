@@ -6,24 +6,35 @@ import br.com.bb.repositorys.GenericRepository;
 import dev.morphia.query.Query;
 import dev.morphia.query.UpdateOperations;
 import dev.morphia.query.UpdateResults;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.extern.java.Log;
 import org.bson.types.ObjectId;
 
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import javax.ws.rs.NotFoundException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
 
 @Log
-public class GenericService<E, Repository extends GenericRepository> {
+@Getter
+@Setter
+@NoArgsConstructor
+public abstract class GenericService<E extends GenericEntity, R extends GenericRepository> {
 
-    private final Repository repository;
+    private R repository;
 
-    public GenericService(Repository repository) {
+    private Class<E> clazz;
+
+    public GenericService(R repository, Class<E> clazz) {
+        this.clazz = clazz;
         this.repository = repository;
     }
 
-    public <E extends GenericEntity> ArrayList<E> getAll(Class<E> clazz) {
+    public ArrayList<E> getAll() {
         log.log(Level.INFO, "Buscando todos os registros");
 
         return repository.getMongoDatastore()
@@ -31,7 +42,7 @@ public class GenericService<E, Repository extends GenericRepository> {
                 .into(new ArrayList<>());
     }
 
-    public <E extends GenericEntity> E get(Class<E> clazz, String id) {
+    public E getOne(String id) {
         log.log(Level.INFO, "Buscando registro " + id);
 
         if (!ObjectId.isValid(id)) {
@@ -44,16 +55,16 @@ public class GenericService<E, Repository extends GenericRepository> {
                 .first();
     }
 
-    public <E extends GenericEntity> E save(E object) {
+    public E save(E object) {
         log.log(Level.INFO, "Salvando entidade");
 
         object.setLastChange(new Date());
 
         repository.getMongoDatastore().save(object);
-        return (E) get(object.getClass(), object.getId().toString());
+        return getOne(object.getId().toString());
     }
 
-    public boolean delete(String id, Class<E> clazz) {
+    public boolean delete(String id) {
         final Query<E> query = repository.getMongoDatastore().createQuery(clazz);
 
         query.field("id").equal(new ObjectId(id));

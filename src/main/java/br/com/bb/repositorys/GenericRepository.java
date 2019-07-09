@@ -10,7 +10,7 @@ import javax.inject.Inject;
 
 @Data
 @ApplicationScoped
-public class GenericRepository<E> {
+public abstract class GenericRepository<E> {
 
     @Inject
     Datastore datastore;
