@@ -1,25 +1,21 @@
 package br.com.bb.resources;
 
 import br.com.bb.entitys.user.User;
-import br.com.bb.resources.user.UserResource;
 import io.quarkus.test.junit.QuarkusTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-import static io.restassured.RestAssured.given;
-import static org.hamcrest.CoreMatchers.is;
-
 @QuarkusTest
 public class UserResourceTest {
 
-    private UserResource userResource;
+    private br.com.bb.resources.UserResource userResource;
     private String uuid;
     private User user;
 
     @BeforeEach
     void setUp() {
-        userResource = Mockito.mock(UserResource.class);
+        userResource = Mockito.mock(br.com.bb.resources.UserResource.class);
         uuid = "5d23d0aa79c88e4e4e2747ab";
         user = new User(uuid, "erik@erik.com", "123456");
     }

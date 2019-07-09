@@ -28,8 +28,8 @@ class GenericServiceTest {
 
     @Test
     void getAll() {
-        userService.getUsers();
-        Mockito.verify(userService).getUsers();
+        userService.getAll();
+        Mockito.verify(userService).getAll();
     }
 
     @Test
