@@ -1,7 +1,8 @@
-package br.com.bb.resources;
+package br.com.bb.resources.user;
 
 import br.com.bb.entitys.user.User;
 
+import br.com.bb.resources.GenericResources;
 import br.com.bb.services.user.UserService;
 
 import javax.inject.Inject;

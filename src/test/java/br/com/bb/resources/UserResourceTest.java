@@ -1,16 +1,11 @@
 package br.com.bb.resources;
 
 import br.com.bb.entitys.user.User;
-import br.com.bb.repositorys.user.UserRepository;
-import br.com.bb.services.user.UserService;
-import io.quarkus.test.Mock;
+import br.com.bb.resources.user.UserResource;
 import io.quarkus.test.junit.QuarkusTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-
-import javax.inject.Inject;
-import java.io.IOException;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.is;
