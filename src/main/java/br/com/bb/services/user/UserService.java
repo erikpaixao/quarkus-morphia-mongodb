@@ -18,7 +18,6 @@ public class UserService {
     @Inject
     UserRepository userRepository;
 
-
     public List<User> getUsers() {
         return getGenericService().getAll(User.class);
     }

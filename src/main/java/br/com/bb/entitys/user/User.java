@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.bson.types.ObjectId;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -27,4 +28,9 @@ public class User extends GenericEntity {
     @Size(min = 2, max = 14)
     private String password;
 
+    public User(String id, String username, String password) {
+        super(new ObjectId(id));
+        this.username = username;
+        this.password = password;
+    }
 }
